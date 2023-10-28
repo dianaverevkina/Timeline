@@ -1,0 +1,257 @@
+@import './fonts.scss';
+@import './nullstyle.scss';
+
+$ff: 'Roboto', sans-serif;
+$fs: 1.3rem;
+$fw: 500;
+$grey: #989898;
+$black: #000;
+$white: #fff;
+$darkPurple: #514EF3;
+
+@mixin flexCenter ($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+@mixin flexSpace ($direction) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba($grey, 0.3);
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-family: $ff;
+  font-size: $fs;
+  font-weight: $fw;
+  color: $black;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;  
+}
+
+.root{
+  min-height: 100%;
+  max-width: 1200px;
+  padding: 0 1.25rem;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.timeline {
+  // display: flex;
+  // justify-content: center;
+  // .timeline__container
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem 0;
+    max-width: 800px;
+    padding: 2rem;
+    margin: 0 auto;
+  }
+  // .timeline__posts
+  &__posts {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem 0;
+    padding: 0 0.6rem 0 0;
+    overflow: auto;
+  }
+   // .timeline__form
+   &__form {
+    display: flex;
+    border-radius: 1.5rem;
+    border: 1px solid #DEDEDD;
+  }
+  // .timeline__input
+  &__input {
+    font-size: 1.125rem;
+    width: 100%;
+    border-radius: 1.5rem;
+    outline: 0px solid transparent;
+    padding: 1.1rem;
+    &:focus {
+
+    }
+  }
+  // .timeline__buttons
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0 1rem;
+    &_hidden{
+      display: none;
+    }
+  }
+   // .timeline__btn
+   &__btn{
+    width: 20px;
+    height: 20px;
+    // padding: 2px;
+    // @include flexCenter(row);
+    & img {
+      max-width: 100%;
+      object-fit: cover;
+    }
+  }
+  // .timeline__btn-audio
+  &__btn-audio {
+  }
+  // .timeline__btn-video
+  &__btn-video {
+
+  }
+}
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  // .post__timestamp
+  &__timestamp {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  // .post__timestamp-icon
+  &__timestamp-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    & img {
+      max-width: 100%;
+      object-fit: cover;
+    }
+  }
+  // .post__content
+  &__content {
+  }
+  // .post__geolocation
+  &__geolocation {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  // .post__coords
+  &__coords {
+  }
+  // .post__geolocation-icon
+  &__geolocation-icon {
+    width: 18px;
+    height: 18px;
+    & img {
+      max-width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.record {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem;
+}
+
+
+// -------------POPOVER-----------------
+
+
+.message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($black, 0.50);
+  @include flexCenter(row);
+  z-index: 999;
+  // .message__container
+  &__container {
+    font-size: 1rem;
+    max-width: 470px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: $white;
+    padding: 1.75rem 2rem 1.75rem;
+    border-radius: 0.75rem;
+  }
+  // .message__form 
+  &__form {
+  // min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem 1rem;
+  font-size: 1.25rem;
+  background: $white;
+  }
+  // .message__input
+  &__input {
+    font-size: 1rem;
+    width: 100%;
+    display: block;
+    padding: 0.625rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #EAEEF4;
+    background: #F6FAFD;
+    &::placeholder {
+      color: rgba($grey, 0.7);
+    }
+  }
+  // .message__btn
+  &__btn {
+    font-size: inherit;
+  }
+  // .message__btn-save
+  &__btn-save {
+    color: $white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 1rem;
+    background: $darkPurple;
+  }
+  // .message__btn-cancel
+  &__btn-cancel {
+  }
+  // .message__buttons 
+  &__buttons{
+    flex-direction: row;
+    align-self: center;
+  }
+  // .message__tooltip
+  &__tooltip{
+    position: absolute;
+    font-size: 0.8rem;
+    padding: 0.6rem 0.5rem;
+    background: #fff;
+    box-shadow: 0 5px 20px 0 rgba($black, 0.1);
+    z-index: 999;
+  }
+  // .message__btn-ok
+  &__btn-ok {
+    align-self: center;
+    padding: 0.5rem;
+    border: 1px solid $grey;
+    // box-shadow: 1px 3px 5px 0 rgba($black, 0.3);
+    border-radius: 0.4rem;
+  }
+}
+
+
