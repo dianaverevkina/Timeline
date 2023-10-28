@@ -20,7 +20,7 @@ export default class Timeline {
 
   bindToDom() {
     this.container = document.querySelector('.timeline__container');
-   
+
     this.postsContainer = this.container.querySelector('.timeline__posts');
     this.formForPost = this.container.querySelector('.timeline__form');
     this.btnAudio = this.container.querySelector('.timeline__btn-audio');
@@ -88,8 +88,8 @@ export default class Timeline {
   // Создаем HTML элемент поста
   renderItem({ date, content, coords }) {
     const { type, data } = content;
-    
-    const postContent = type !== 'text' ? `<${type} src="${data}" controls></${type}>` : data;
+
+    const postContent = type !== 'text' ? `<${type} src="${data}" class="post__${type}" controls></${type}>` : data;
 
     const post = document.createElement('div');
     post.classList.add('post');
@@ -116,6 +116,7 @@ export default class Timeline {
   showRecordBtns() {
     this.btns = this.formForPost.querySelector('.timeline__buttons');
     this.btns.classList.add('timeline__buttons_hidden');
+
     this.record = document.createElement('div');
     this.record.classList.add('timeline__record', 'record');
     this.record.innerHTML = `
@@ -131,19 +132,34 @@ export default class Timeline {
     this.formForPost.append(this.record);
 
     this.timer = this.record.querySelector('.record__timer');
-    this.btnSendRecord = this.record.querySelector('. record__send');
+    this.btnSendRecord = this.record.querySelector('.record__send');
     this.btnCancelRecord = this.record.querySelector('.record__cancel');
 
-    this.btnCancelRecord.addEventListener('click', () => this.stopRecord());
+    this.btnCancelRecord.addEventListener('click', () => {
+      if (this.video) this.video.remove();
+      this.stopRecord();
+    });
   }
 
   // При клике по кнопке аудио/видео начинаем запись, запускаем время
   async startRecord(typeRecord) {
     this.showRecordBtns();
-    const obj = typeRecord === 'video' ? { video: true } : { audio: true };
+    const obj = typeRecord === 'video' ? { video: true, audio: true } : { audio: true };
     try {
       const stream = await navigator.mediaDevices.getUserMedia(obj);
       const recorder = new MediaRecorder(stream);
+
+      if (typeRecord === 'video') {
+        this.video = document.createElement('video');
+        this.video.classList.add('timeline__video');
+        this.video.muted = true;
+        this.postsContainer.prepend(this.video);
+        this.video.srcObject = stream;
+
+        this.video.addEventListener('canplay', () => {
+          this.video.play();
+        });
+      }
 
       const chunks = [];
       recorder.addEventListener('start', () => {
@@ -172,15 +188,15 @@ export default class Timeline {
       this.btnSendRecord.addEventListener('click', () => {
         recorder.stop();
         stream.getTracks().forEach((track) => track.stop());
+        if (this.video) this.video.remove();
         this.stopRecord();
       });
-
     } catch (error) {
       this.stopRecord();
       if (error.name === 'NotAllowedError') {
         this.popover.showMessage('Необходимо дать разрешение, чтобы осуществить запись видео/аудио');
       }
-      
+
       if (error.name === 'NotFoundError') {
         this.popover.showMessage('К сожалению, у Вас нет подключенных устройств видео/аудио');
       }

@@ -15,12 +15,6 @@ $darkPurple: #514EF3;
   align-items: center;
   flex-direction: $direction;
 }
-@mixin flexSpace ($direction) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: $direction;
-}
 
 ::-webkit-scrollbar {
   width: 2px;
@@ -50,9 +44,6 @@ body {
 }
 
 .timeline {
-  // display: flex;
-  // justify-content: center;
-  // .timeline__container
   &__container {
     height: 100vh;
     display: flex;
@@ -85,9 +76,6 @@ body {
     border-radius: 1.5rem;
     outline: 0px solid transparent;
     padding: 1.1rem;
-    &:focus {
-
-    }
   }
   // .timeline__buttons
   &__buttons {
@@ -103,19 +91,10 @@ body {
    &__btn{
     width: 20px;
     height: 20px;
-    // padding: 2px;
-    // @include flexCenter(row);
     & img {
       max-width: 100%;
       object-fit: cover;
     }
-  }
-  // .timeline__btn-audio
-  &__btn-audio {
-  }
-  // .timeline__btn-video
-  &__btn-video {
-
   }
 }
 .post {
@@ -139,17 +118,11 @@ body {
       object-fit: cover;
     }
   }
-  // .post__content
-  &__content {
-  }
   // .post__geolocation
   &__geolocation {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-  }
-  // .post__coords
-  &__coords {
   }
   // .post__geolocation-icon
   &__geolocation-icon {
@@ -196,7 +169,6 @@ body {
   }
   // .message__form 
   &__form {
-  // min-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 2rem 1rem;
@@ -227,9 +199,6 @@ body {
     border-radius: 1rem;
     background: $darkPurple;
   }
-  // .message__btn-cancel
-  &__btn-cancel {
-  }
   // .message__buttons 
   &__buttons{
     flex-direction: row;
@@ -249,7 +218,6 @@ body {
     align-self: center;
     padding: 0.5rem;
     border: 1px solid $grey;
-    // box-shadow: 1px 3px 5px 0 rgba($black, 0.3);
     border-radius: 0.4rem;
   }
 }
